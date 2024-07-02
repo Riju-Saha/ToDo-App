@@ -1,10 +1,10 @@
-Find this project in your computer and click open as code.
+Find this project on your computer and click open as code.
 
-Open a Server folder as well as todo folder integrated terminal.
+Open a Server folder as well as a todo folder integrated terminal.
 
-In server terminal, run this line - npm install followed by this line - node app. Make sure Xampp is running behind.
+In the server terminal, run this line - npm install followed by this line - node app. Make sure Xampp is running behind.
 
-Then in todo terminal, run this line - npm install followed by this line - npm run dev
+Then in the todo terminal, run this line - npm install followed by this line - npm run dev
 
 Open http://localhost:3000 to view it in your browser.
 
