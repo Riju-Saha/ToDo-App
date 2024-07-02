@@ -16,7 +16,7 @@ Technologies Used:
 4. TypeScript
 5. Node.js
 6. Express.js
-7. CORS
+7. Middlewares
 8. React
 9. Next.Js
 10. MySql
