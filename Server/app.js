@@ -6,12 +6,13 @@ const app = express();
 
 
 // middlewares
-app.use(cors({
-    origin: ['https://todo-frontend-zeta-coral.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
+// app.use(cors({
+//     origin: ['.vercel.app'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true
+// }));
+app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -31,7 +32,7 @@ app.get('/', (req,res) => {
     res.send('Hello World');
 })
 
-app.post('https://todo-rho-plum.vercel.app/auth/register', (req, res) => {
+app.post('/auth/register', (req, res) => {
     const { name, username, password } = req.body;
     console.log("Received registration request:", { name, username, password });
 
@@ -49,7 +50,7 @@ app.post('https://todo-rho-plum.vercel.app/auth/register', (req, res) => {
 });
 
 
-app.post('https://todo-rho-plum.vercel.app/auth/login', (req, res) => {
+app.post('/auth/login', (req, res) => {
     const { username, password } = req.body;
     // console.log("hello world")
     console.log("username is: ", username)
@@ -69,7 +70,7 @@ app.post('https://todo-rho-plum.vercel.app/auth/login', (req, res) => {
     });
 });
 http://localhost:3000/test?username=test
-app.post('https://todo-rho-plum.vercel.app/todos', (req, res) => {
+app.post('/todos', (req, res) => {
     const { username, todo, priority } = req.body;
     const sql = "INSERT INTO TODO_DETAILS (username, todo, priority) VALUES (?, ?, ?)"
     connection.query(sql, [username, todo, priority], (err, result) => {
@@ -84,7 +85,7 @@ app.post('https://todo-rho-plum.vercel.app/todos', (req, res) => {
     });
 });
 
-app.get('https://todo-rho-plum.vercel.app/todos', (req, res) => {
+app.get('/todos', (req, res) => {
     const { username } = req.query;
     console.log({ username })
     if (!username) {
@@ -109,7 +110,7 @@ app.get('https://todo-rho-plum.vercel.app/todos', (req, res) => {
 });
 
 
-app.delete('https://todo-rho-plum.vercel.app/todos', (req, res) => {
+app.delete('/todos', (req, res) => {
     const { id } = req.query;
     console.log({ id })
     if (!id) {
@@ -125,7 +126,7 @@ app.delete('https://todo-rho-plum.vercel.app/todos', (req, res) => {
     });
 });
 
-app.put('https://todo-rho-plum.vercel.app/todos', (req, res) => {
+app.put('/todos', (req, res) => {
     const { id } = req.query;
     const { username, todo, priority } = req.body;
     console.log({ id });
