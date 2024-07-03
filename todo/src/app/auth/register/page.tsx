@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 
-export default function page() {
+export default function Registerpage() {
     const router = useRouter();
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');

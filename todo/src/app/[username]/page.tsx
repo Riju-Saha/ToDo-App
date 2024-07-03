@@ -18,7 +18,7 @@ interface Todo {
     // action: string;
 }
 
-export default function page() {
+export default function Usernamepage() {
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
     const router = useRouter();
