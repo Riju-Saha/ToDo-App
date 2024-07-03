@@ -74,9 +74,8 @@ export default function page() {
 
     const handleAdd = async () => {
         console.log('Form submitted:', { username, todo, priority });
-
         try {
-            const response = await fetch("http://localhost:8080/todos", {
+            const response = await fetch("https://todo-rho-plum.vercel.app/todos", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

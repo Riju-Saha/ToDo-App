@@ -15,7 +15,7 @@ export default function page() {
         console.log('Form submitted:', { username, password });
 
         try {
-            const response = await fetch('http://localhost:8080/auth/login', {
+            const response = await fetch('https://todo-rho-plum.vercel.app/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
