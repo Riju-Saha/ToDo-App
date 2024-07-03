@@ -1,6 +1,6 @@
 "use client"
 import { useSearchParams, useRouter } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import LogoutBtn from '@/components/logoutBtn';
 // import { Label } from "@/components/ui/label";
@@ -28,7 +28,7 @@ export default function Usernamepage() {
     const [isEditMode, setIsEditMode] = useState(false);
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
 
-    const fetchTodos = async () => {
+    const fetchTodos = useCallback(async () => {
         try {
             const response = await fetch(`https://todo-rho-plum.vercel.app/todos?username=${username}`, {
                 method: 'GET',
@@ -40,21 +40,21 @@ export default function Usernamepage() {
             if (!response.ok) {
                 throw new Error('Failed to fetch todos');
             }
-            // console.log(response)
+
             const data = await response.json();
-            console.log('Fetched todos:', {data});
+            console.log('Fetched todos:', { data });
             setTodos(data.todos);
         } catch (error) {
             console.error('Error fetching todos:', error);
             alert('Failed to fetch todos. Please try again.');
         }
-    };
+    }, [username]);
 
     useEffect(() => {
         if (username) {
             fetchTodos();
         }
-    }, [username]);
+    }, [username, fetchTodos]);
     
     const handleEdit = (id: number, task: string, priority: string) => {
         setIsEditMode(true);
