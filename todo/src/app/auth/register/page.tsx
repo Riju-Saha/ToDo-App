@@ -15,7 +15,7 @@ export default function Registerpage() {
         console.log('Form submitted:', { name, username, password });
 
         try {
-            const response = await fetch('https://todo-rho-plum.vercel.app/auth/register', {
+            const response = await fetch(`${window.location.origin}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

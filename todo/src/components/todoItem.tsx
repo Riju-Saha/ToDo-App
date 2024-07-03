@@ -13,7 +13,7 @@ export default function TodoItem(props: {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/todos?id=${props.id}`,{
+        `${window.location.origin}/todos?id=${props.id}`,{
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

@@ -23,10 +23,9 @@ export default function Usernamepage() {
     const [todos, setTodos] = useState<Todo[]>([]);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
-
     const fetchTodos = useCallback(async () => {
         try {
-            const response = await fetch(`https://todo-rho-plum.vercel.app/todos?username=${username}`, {
+            const response = await fetch(`${window.location.origin}/todos?username=${username}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,7 +70,7 @@ export default function Usernamepage() {
     const handleAdd = async () => {
         console.log('Form submitted:', { username, todo, priority });
         try {
-            const response = await fetch("https://todo-rho-plum.vercel.app/todos", {
+            const response = await fetch(`${window.location.origin}/todos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,7 +105,7 @@ export default function Usernamepage() {
         if (editTodoId === null) return;
 
         try {
-            const response = await fetch(`https://todo-rho-plum.vercel.app/todos?id=${editTodoId}`, {
+            const response = await fetch(`${window.location.origin}/todos?id=${editTodoId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

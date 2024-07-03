@@ -27,6 +27,10 @@ connection.connect((err) => {
     console.log('Connected!');
 });
 
+app.get('/', (req,res) => {
+    res.send('Hello World');
+})
+
 app.post('https://todo-rho-plum.vercel.app/auth/register', (req, res) => {
     const { name, username, password } = req.body;
     console.log("Received registration request:", { name, username, password });
