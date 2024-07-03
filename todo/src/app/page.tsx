@@ -8,7 +8,7 @@ export default function Home() {
       </div>
 
       <Link href='/auth/login'>
-        <div style={{ textAlign: 'center', backgroundColor: 'red', margin: 'auto', marginTop: '10%', width: '10%', padding: '1%' }}>
+        <div style={{ textAlign: 'center', backgroundColor: 'red', margin: 'auto', marginTop: '10%', padding: '1%' }}>
           <button type="button">Get Started</button>
         </div>
 
