@@ -30,7 +30,7 @@ export default function Usernamepage() {
 
     const fetchTodos = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/todos?username=${username}`, {
+            const response = await fetch(`https://todo-rho-plum.vercel.app/todos?username=${username}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export default function Usernamepage() {
         if (editTodoId === null) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/todos?id=${editTodoId}`, {
+            const response = await fetch(`https://todo-rho-plum.vercel.app/todos?id=${editTodoId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -188,6 +188,7 @@ export default function Usernamepage() {
                     <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
                         {todos.map((element) => (
                             <TodoItem
+                                key={element.id}
                                 username={element.username}
                                 id={element.id}
                                 task={element.task}
