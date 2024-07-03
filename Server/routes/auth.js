@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-router.post('/auth/register', (req, res) => {
+router.post('/register', (req, res) => {
     const { name, username, password } = req.body;
     console.log("Received registration request:", { name, username, password });
 
@@ -18,7 +18,7 @@ router.post('/auth/register', (req, res) => {
 });
 
 
-router.post('/auth/login', (req, res) => {
+router.post('/login', (req, res) => {
     const { username, password } = req.body;
     // console.log("hello world")
     console.log("username is: ", username)
