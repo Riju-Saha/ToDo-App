@@ -156,4 +156,9 @@ app.put('https://todo-rho-plum.vercel.app/todos', (req, res) => {
 //     res.status(200).json({success: true})
 // ])
 
+app.get('/', (req,res) =>{
+    app.use(express.static(path.resolve(__dirname, "todo", "build")));
+    res.sendFile(path.resolve(__dirname, "todo", "build", "index.html"));
+});
+
 app.listen(8080);
