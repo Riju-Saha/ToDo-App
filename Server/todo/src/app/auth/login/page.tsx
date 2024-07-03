@@ -15,7 +15,7 @@ export default function Loginpage() {
         console.log('Form submitted:', { username, password });
         
         try {
-            const response = await fetch(`${window.location.origin}/auth/login`, {
+            const response = await fetch(`${window.location.origin}/api/v1/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ export default function Registerpage() {
         console.log('Form submitted:', { name, username, password });
 
         try {
-            const response = await fetch(`${window.location.origin}/auth/register`, {
+            const response = await fetch(`${window.location.origin}/api/v1/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

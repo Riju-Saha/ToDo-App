@@ -25,7 +25,7 @@ export default function Usernamepage() {
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
     const fetchTodos = useCallback(async () => {
         try {
-            const response = await fetch(`${window.location.origin}/todos?username=${username}`, {
+            const response = await fetch(`${window.location.origin}/api/v2/todos?username=${username}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export default function Usernamepage() {
     const handleAdd = async () => {
         console.log('Form submitted:', { username, todo, priority });
         try {
-            const response = await fetch(`${window.location.origin}/todos`, {
+            const response = await fetch(`${window.location.origin}/api/v2/todos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export default function Usernamepage() {
         if (editTodoId === null) return;
 
         try {
-            const response = await fetch(`${window.location.origin}/todos?id=${editTodoId}`, {
+            const response = await fetch(`${window.location.origin}/api/v2/todos?id=${editTodoId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
