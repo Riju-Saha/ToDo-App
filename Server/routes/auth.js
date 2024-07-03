@@ -1,6 +1,7 @@
 const router = require("express").Router();
+const mysql = require('mysql')
 
-router.post('/register', (req, res) => {
+router.post("/register", async (req, res) => {
     const { name, username, password } = req.body;
     console.log("Received registration request:", { name, username, password });
 
@@ -18,7 +19,7 @@ router.post('/register', (req, res) => {
 });
 
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     // console.log("hello world")
     console.log("username is: ", username)

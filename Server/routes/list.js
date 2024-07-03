@@ -1,7 +1,9 @@
 const router = require("express").Router();
+const mysql = require('mysql')
 
 
-router.post('/todos', (req, res) => {
+
+router.post('/todos', async(req, res) => {
     const { username, todo, priority } = req.body;
     const sql = "INSERT INTO TODO_DETAILS (username, todo, priority) VALUES (?, ?, ?)"
     connection.query(sql, [username, todo, priority], (err, result) => {
@@ -16,7 +18,7 @@ router.post('/todos', (req, res) => {
     });
 });
 
-router.get('/todos', (req, res) => {
+router.get('/todos', async(req, res) => {
     const { username } = req.query;
     console.log({ username })
     if (!username) {
@@ -41,7 +43,7 @@ router.get('/todos', (req, res) => {
 });
 
 
-router.delete('/todos', (req, res) => {
+router.delete('/todos', async(req, res) => {
     const { id } = req.query;
     console.log({ id })
     if (!id) {
@@ -57,7 +59,7 @@ router.delete('/todos', (req, res) => {
     });
 });
 
-router.put('/todos', (req, res) => {
+router.put('/todos', async(req, res) => {
     const { id } = req.query;
     const { username, todo, priority } = req.body;
     console.log({ id });
