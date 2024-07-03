@@ -3,19 +3,15 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import LogoutBtn from '@/components/logoutBtn';
-// import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
-// import { cn } from "@/utils/cn";
 import TodoItem from '@/components/todoItem';
-
 
 interface Todo {
     username: string;
     id: number; // Adjust as per your API response
     task: string;
     priority: string;
-    // action: string;
 }
 
 export default function Usernamepage() {
@@ -55,7 +51,7 @@ export default function Usernamepage() {
             fetchTodos();
         }
     }, [username, fetchTodos]);
-    
+
     const handleEdit = (id: number, task: string, priority: string) => {
         setIsEditMode(true);
         setEditTodoId(id);
@@ -141,8 +137,6 @@ export default function Usernamepage() {
         }
     };
 
-
-    console.log("am from page. and the edit id clicked is: ", editTodoId)
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1%', marginRight: '1%' }}>
@@ -178,12 +172,12 @@ export default function Usernamepage() {
                 </form>
 
                 <div className="my-4">
-                    <h3 className="font-bold text-lg text-center" style={{marginBottom: '8%'}}>Current Todos:</h3>
+                    <h3 className="font-bold text-lg text-center" style={{ marginBottom: '8%' }}>Current Todos:</h3>
                     <ul style={{ listStyleType: 'none', padding: '0' }}>
-                        <li style={{ display: 'inline-block', width: '18%', fontWeight: 'bold' }}>ID</li>
-                        <li style={{ display: 'inline-block', width: '35%', fontWeight: 'bold' }}>Task</li>
-                        <li style={{ display: 'inline-block', width: '22%', fontWeight: 'bold' }}>Priority</li>
-                        <li style={{ display: 'inline-block', width: '10%', fontWeight: 'bold' }}>Action</li>
+                        <li key="header-id" style={{ display: 'inline-block', width: '18%', fontWeight: 'bold' }}>ID</li>
+                        <li key="header-task" style={{ display: 'inline-block', width: '35%', fontWeight: 'bold' }}>Task</li>
+                        <li key="header-priority" style={{ display: 'inline-block', width: '22%', fontWeight: 'bold' }}>Priority</li>
+                        <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold' }}>Action</li>
                     </ul>
                     <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
                         {todos.map((element) => (
@@ -201,5 +195,4 @@ export default function Usernamepage() {
             </div>
         </>
     );
-
 }
