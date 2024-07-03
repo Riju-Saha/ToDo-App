@@ -7,9 +7,10 @@ const app = express();
 
 // middlewares
 app.use(cors({
-    origin: ['https://todo-rho-plum.vercel.app'],
+    origin: ['https://todo-rho-plum.vercel.app/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 app.use(bodyParser.json());
 app.use(express.json());
