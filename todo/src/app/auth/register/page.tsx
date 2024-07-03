@@ -5,27 +5,27 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 
-export default function Loginpage() {
+export default function Registerpage() {
     const router = useRouter();
+    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', { username, password });
-        
+        console.log('Form submitted:', { name, username, password });
+
         try {
-            const response = await fetch(`${window.location.origin}/api/v1/login`, {
+            const response = await fetch('http://localhost:8080/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password }),
-            }
-        );
+                body: JSON.stringify({ name, username, password }),
+            });
 
             if (!response.ok) {
-                alert("wrong login")
+                alert('Registration failed. Please check your details and try again.');
+                return;
             }
 
             const data = await response.json();
@@ -34,31 +34,32 @@ export default function Loginpage() {
             if (data.success) {
                 router.push(`/${username}?username=${username}`);
             } else {
-                alert('Login failed: ' + data.message);
+                alert('Registration failed: ' + data.message);
             }
         } catch (error) {
             console.error('Error during fetch:', error);
-            alert('An error occurred during login. Please try again.');
+            alert('An error occurred during registration. Please try again.');
         }
     };
 
-
     return (
-        <div className="max-w-md w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black" >
+        <div className="max-w-md w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
             <h2 className="font-bold text-xl text-center">
-                Login
+                Register
             </h2>
 
             <form className="my-8" onSubmit={handleSubmit}>
                 <LabelInputContainer className="mb-2">
+                    <Label htmlFor="Name" >Name</Label>
+                    <Input id="Name" placeholder="Name" type="text" className="bg-black" style={{ color: 'white', fontSize: '17px' }} value={name} onChange={(e) => setName(e.target.value)} />
+                </LabelInputContainer>
+                <LabelInputContainer className="mb-2">
                     <Label htmlFor="Username" >Username</Label>
-                    <Input id="Username" placeholder="Username" type="text" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={username}
-                        onChange={(e) => setUsername(e.target.value)} />
+                    <Input id="Username" placeholder="Username" type="text" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={username} onChange={(e) => setUsername(e.target.value)} />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Password" >Password</Label>
-                    <Input id="Password" placeholder="Password" type="password" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={password}
-                        onChange={(e) => setPassword(e.target.value)} />
+                    <Input id="Password" placeholder="Password" type="password" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={password} onChange={(e) => setPassword(e.target.value)} />
                 </LabelInputContainer>
 
                 <button
