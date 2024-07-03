@@ -7,7 +7,7 @@ const app = express();
 
 // middlewares
 app.use(cors({
-    origin: ['https://todo-frontend-zeta-coral.vercel.app/'],
+    origin: ['https://todo-frontend-zeta-coral.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
