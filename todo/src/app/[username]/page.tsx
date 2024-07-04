@@ -1,5 +1,5 @@
 "use client"
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import LogoutBtn from '@/components/logoutBtn';
@@ -9,7 +9,7 @@ import TodoItem from '@/components/todoItem';
 
 interface Todo {
     username: string;
-    id: number; // Adjust as per your API response
+    id: number;
     task: string;
     priority: string;
 }
@@ -17,17 +17,22 @@ interface Todo {
 export default function Usernamepage() {
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
-    const router = useRouter();
     const [todo, setTodo] = useState('');
     const [priority, setPriority] = useState('low');
     const [todos, setTodos] = useState<Todo[]>([]);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
+    const [sortTodo, setSortTodo] = useState<string>('id');
+    console.log("todos are ",todos)
+    // alert(sortTodo)
 
-
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortTodo(e.target.value);
+        console.log("sort is: ", sortTodo)
+    };
     const fetchTodos = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:8080/todos?username=${username}`, {
+            const response = await fetch(`http://localhost:8080/todos?username=${username}&sortTodo=${sortTodo}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +50,7 @@ export default function Usernamepage() {
             console.error('Error fetching todos:', error);
             alert('Failed to fetch todos. Please try again.');
         }
-    }, [username]);
+    }, [username, sortTodo]);
 
     useEffect(() => {
         if (username) {
@@ -154,12 +159,7 @@ export default function Usernamepage() {
                             onChange={(e) => setTodo(e.target.value)} required />
                     </div>
                     <div className="mb-2">
-                        <Select
-                            id="priority"
-                            className="bg-black text-white"
-                            value={priority}
-                            onChange={(e) => setPriority(e.target.value)}
-                        >
+                        <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
@@ -173,7 +173,16 @@ export default function Usernamepage() {
                 </form>
 
                 <div className="my-4">
-                    <h3 className="font-bold text-lg text-center" style={{ marginBottom: '8%' }}>Current Todos:</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8%'}}>
+                        <h3 className="font-bold text-lg text-center" >Current Todos:</h3>
+                        <h3>
+                            <Select name="sort" value={sortTodo} id="sort" className="bg-black text-white" onChange={handleSortChange}>
+                                <option value="id">Id</option>
+                                <option value="priority">Priority</option>
+                                {/* SELECT * FROM todo_details WHERE username = 'test' ORDER BY FIELD(priority, 'high', 'medium','low' ); */}
+                            </Select>
+                        </h3>
+                    </div>
                     <ul style={{ listStyleType: 'none', padding: '0' }}>
                         <li key="header-id" style={{ display: 'inline-block', width: '18%', fontWeight: 'bold' }}>ID</li>
                         <li key="header-task" style={{ display: 'inline-block', width: '35%', fontWeight: 'bold' }}>Task</li>

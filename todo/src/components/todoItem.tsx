@@ -13,18 +13,18 @@ export default function TodoItem(props: {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/todos?id=${props.id}`,{
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        `http://localhost:8080/todos?id=${props.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
       );
       if (!response.ok) {
         throw new Error("Failed to delete todo");
       }
       console.log("Todo deleted successfully");
-    window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error("Error fetching todos:", error);
       alert("Failed to fetch todos. Please try again.");
@@ -43,8 +43,8 @@ export default function TodoItem(props: {
             props.priority === "high"
               ? "red"
               : props.priority === "medium"
-              ? "orange"
-              : "magenta",
+                ? "orange"
+                : "magenta",
           marginTop: "5%",
           padding: "3%",
         }}

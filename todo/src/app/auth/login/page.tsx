@@ -13,7 +13,7 @@ export default function Loginpage() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Form submitted:', { username, password });
-        
+
         try {
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
@@ -22,7 +22,7 @@ export default function Loginpage() {
                 },
                 body: JSON.stringify({ username, password }),
             }
-        );
+            );
 
             if (!response.ok) {
                 alert("wrong login")

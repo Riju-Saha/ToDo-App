@@ -46,7 +46,6 @@ app.post('/auth/register', (req, res) => {
 
 app.post('/auth/login', (req, res) => {
     const { username, password } = req.body;
-    // console.log("hello world")
     console.log("username is: ", username)
     console.log("password is: ", password)
     const sql = "SELECT * FROM user WHERE username = ? AND password = ?";
@@ -79,14 +78,22 @@ app.post('/todos', (req, res) => {
 });
 
 app.get('/todos', (req, res) => {
-    const { username } = req.query;
+    const { username, sortTodo } = req.query;
     console.log({ username })
     if (!username) {
         return res.status(400).json({ success: false, message: 'Username parameter is required' });
     }
 
-    const sql = 'SELECT * FROM TODO_DETAILS WHERE username = ?';
-    connection.query(sql, [username], (err, results) => {
+    let sql;
+    if (sortTodo === 'priority') {
+    sql = 'SELECT * FROM TODO_DETAILS WHERE username = ? ORDER BY FIELD(priority, ?, ?, ?)';
+    } else if (sortTodo === 'id') {
+        sql = 'SELECT * FROM TODO_DETAILS WHERE username = ? ORDER BY todo_id';
+    } else {
+        return res.status(400).json({ message: 'Invalid sort option' });
+    }   
+
+    connection.query(sql, [username, 'high', 'medium', 'low'], (err, results) => {
         if (err) {
             console.error('Error fetching todos:', err);
             return res.status(500).json({ success: false, message: 'Failed to fetch todos' });
@@ -101,7 +108,6 @@ app.get('/todos', (req, res) => {
         res.json({ success: true, todos });
     });
 });
-
 
 app.delete('/todos', (req, res) => {
     const { id } = req.query;
@@ -135,19 +141,12 @@ app.put('/todos', (req, res) => {
             return res.status(500).json({ success: false, message: 'Failed to update todo' });
         }
 
-        // Check if any rows were affected
         if (results.affectedRows === 0) {
             return res.status(404).json({ success: false, message: 'Todo not found' });
         }
 
-        // Return a success message
         res.json({ success: true, message: `Todo with id ${id} updated successfully` });
     });
 });
-
-
-// app.get('/auth/login', (req,res) => [
-//     res.status(200).json({success: true})
-// ])
 
 app.listen(8080);

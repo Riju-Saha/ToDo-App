@@ -17,9 +17,6 @@ function Navbar() {
     return (
         <div>
             <Menu setActive={setActive}>
-                {/* <Link href="/">
-                    <MenuItem setActive={setActive} item="Home"></MenuItem>
-                </Link> */}
                 <Link href="/auth/register">
                     <MenuItem setActive={setActive} item="Register"></MenuItem>
                 </Link>
