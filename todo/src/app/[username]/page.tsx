@@ -9,6 +9,7 @@ import TodoItem from '@/components/todoItem';
 
 interface Todo {
     username: string;
+    startDate: string;
     id: number;
     task: string;
     priority: string;
@@ -155,7 +156,7 @@ export default function Usernamepage() {
             </div> */}
 
 
-                <div className="max-w-md w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
+                <div className="max-w-xxl w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
 
                     <form className="my-8" onSubmit={handleSubmit}>
                         <div className="mb-2">
@@ -188,16 +189,18 @@ export default function Usernamepage() {
                             </h3>
                         </div>
                         <ul style={{ listStyleType: 'none', padding: '0' }}>
-                            <li key="header-id" style={{ display: 'inline-block', width: '12%', fontWeight: 'bold' }}>ID</li>
-                        <li key="header-task" style={{ display: 'inline-block', width: '38%', fontWeight: 'bold', textAlign: "center" }}>Task</li>
-                        <li key="header-priority" style={{ display: 'inline-block', width: '24%', fontWeight: 'bold', textAlign: "center" }}>Priority</li>
-                            <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: "center" }}>Action</li>
+                        <li key="header-id" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: 'center' }}>ID</li>
+                        <li key="header-created" style={{ display: 'inline-block', width: '20%', fontWeight: 'bold', textAlign: 'center' }}>Created</li>
+                        <li key="header-task" style={{ display: 'inline-block', width: '30%', fontWeight: 'bold', textAlign: 'center' }}>Task</li>
+                        <li key="header-priority" style={{ display: 'inline-block', width: '15%', fontWeight: 'bold', textAlign: 'center' }}>Priority</li>
+                        <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: 'center' }}>Action</li>
                         </ul>
                         <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
                             {todos.map((element) => (
                                 <TodoItem
                                     key={element.id}
                                     username={element.username}
+                                    startDate = {element.startDate}
                                     id={element.id}
                                     task={element.task}
                                     priority={element.priority}

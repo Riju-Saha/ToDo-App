@@ -86,12 +86,22 @@ app.get('/todos', (req, res) => {
 
     let sql;
     if (sortTodo === 'priority') {
-    sql = 'SELECT * FROM TODO_DETAILS WHERE username = ? ORDER BY FIELD(priority, ?, ?, ?)';
+        sql = `
+            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate
+            FROM TODO_DETAILS
+            WHERE username = ?
+            ORDER BY FIELD(priority, ?, ?, ?)
+        `;
     } else if (sortTodo === 'id') {
-        sql = 'SELECT * FROM TODO_DETAILS WHERE username = ? ORDER BY todo_id';
+        sql = `
+            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate
+            FROM TODO_DETAILS
+            WHERE username = ?
+            ORDER BY todo_id
+        `;
     } else {
-        return res.status(400).json({ message: 'Invalid sort option' });
-    }   
+        return res.status(400).json({ success: false, message: 'Invalid sort option' });
+    }
 
     connection.query(sql, [username, 'high', 'medium', 'low'], (err, results) => {
         if (err) {
@@ -101,10 +111,12 @@ app.get('/todos', (req, res) => {
         // res.send(results)
         const todos = results.map(result => ({
             username: result.username,
+            startDate: result.StartDate,
             id: result.todo_id,
             task: result.todo,
             priority: result.priority
         }));
+        // console.log("todos are: ",todos)
         res.json({ success: true, todos });
     });
 });

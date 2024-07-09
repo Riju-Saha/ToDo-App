@@ -1,10 +1,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-// import Head from 'next/head'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faFaceRelieved } from '@fortawesome/pro-solid-svg-icons'
-
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -16,9 +12,11 @@ export default function TodoItem(props: {
   priority: string;
   id: number;
   task: string;
+  startDate: string;
   onEdit: (id: number, task: string, priority: string) => void;
 }) {
   const router = useRouter();
+  const dateOnly = new Date(props.startDate).toISOString().split('T')[0];
 
   const handleDelete = async () => {
     try {
@@ -55,24 +53,29 @@ export default function TodoItem(props: {
                 : "#DADADA",
           marginTop: "5%",
           padding: "3%",
+          // display: "flex",
+          // justifyContent: "space-between"
         }}
       >
-        <span style={{ display: "inline-block", width: "12%", color: "black", fontWeight: "bold" }}>
+        <span style={{ display: "inline-block", width: "10%", color: "black", fontWeight: "bold" }}>
           {props.id}
         </span>
-        <div style={{ display: "inline-block", width: "38%", color: "black", fontWeight: "bold", wordWrap: "break-word" }}>
+        <span style={{ display: "inline-block", width: "20%", color: "black", fontWeight: "bold" }}>
+          {dateOnly}
+        </span>
+        <div style={{ display: "inline-block", width: "30%", color: "black", fontWeight: "bold", wordWrap: "break-word" }}>
           {props.task}
         </div>
-        <span style={{ display: "inline-block", width: "24%", color: "black", fontWeight: "bold", textAlign: "center" }}>
+        <span style={{ display: "inline-block", width: "15%", color: "black", fontWeight: "bold", textAlign: "center" }}>
           {props.priority}
         </span>
-        <span style={{ display: "inline-block", width: "12.5%", backgroundColor: 'gray', textAlign: 'center' }}>
+        <span style={{ display: "inline-block", width: "4.5%", backgroundColor: 'gray', textAlign: 'center' }}>
           <button type="button" onClick={handleUpdate}>
             {/* Edit */}
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>
         </span>
-        <span style={{ display: "inline-block", width: "12.5%", backgroundColor: 'black', textAlign: 'center' }}>
+        <span style={{ display: "inline-block", width: "4.5%", backgroundColor: 'black', textAlign: 'center' }}>
           <button type="button" onClick={handleDelete}>
             {/* Delete */}
             <FontAwesomeIcon icon={faTrash} />
