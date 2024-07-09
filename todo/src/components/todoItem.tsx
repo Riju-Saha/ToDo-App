@@ -1,6 +1,16 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
+// import Head from 'next/head'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faFaceRelieved } from '@fortawesome/pro-solid-svg-icons'
+
+import ReactDOM from 'react-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+
+
 export default function TodoItem(props: {
   username: string;
   priority: string;
@@ -40,32 +50,33 @@ export default function TodoItem(props: {
       <li
         style={{
           backgroundColor:
-            props.priority === "high"
-              ? "red"
-              : props.priority === "medium"
-                ? "orange"
-                : "magenta",
+            props.priority === "high" ? "#484848"
+              : props.priority === "medium" ? "#919191"
+                : "#DADADA",
           marginTop: "5%",
           padding: "3%",
         }}
       >
-        <span style={{ display: "inline-block", width: "18%" }}>
+        <span style={{ display: "inline-block", width: "12%", color: "black", fontWeight: "bold" }}>
           {props.id}
         </span>
-        <span style={{ display: "inline-block", width: "35%" }}>
+        <div style={{ display: "inline-block", width: "38%", color: "black", fontWeight: "bold", wordWrap: "break-word" }}>
           {props.task}
-        </span>
-        <span style={{ display: "inline-block", width: "22%" }}>
+        </div>
+        <span style={{ display: "inline-block", width: "24%", color: "black", fontWeight: "bold", textAlign: "center" }}>
           {props.priority}
         </span>
-        <span style={{ display: "inline-block", width: "10%", backgroundColor: 'navy' }}>
+        <span style={{ display: "inline-block", width: "12.5%", backgroundColor: 'gray', textAlign: 'center' }}>
           <button type="button" onClick={handleUpdate}>
-            Edit
+            {/* Edit */}
+            <FontAwesomeIcon icon={faPenToSquare} />
           </button>
         </span>
-        <span style={{ display: "inline-block", width: "15%", backgroundColor: 'violet' }}>
+        <span style={{ display: "inline-block", width: "12.5%", backgroundColor: 'black', textAlign: 'center' }}>
           <button type="button" onClick={handleDelete}>
-            Delete
+            {/* Delete */}
+            <FontAwesomeIcon icon={faTrash} />
+
           </button>
         </span>
       </li>

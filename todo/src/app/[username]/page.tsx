@@ -23,7 +23,7 @@ export default function Usernamepage() {
     const [isEditMode, setIsEditMode] = useState(false);
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
     const [sortTodo, setSortTodo] = useState<string>('id');
-    console.log("todos are ",todos)
+    console.log("todos are ", todos)
     // alert(sortTodo)
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -145,64 +145,71 @@ export default function Usernamepage() {
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1%', marginRight: '1%' }}>
+            <div style={{ display: "flex", justifyContent: "space-between", position: "relative", float: "right", marginTop: "1%", marginRight: "1%" }}>
                 <Link href='/auth/login'>
                     <LogoutBtn />
                 </Link>
-            </div>
-            <div className="max-w-md w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
-                <h2 className="font-bold text-xl text-center">Todos</h2>
-
-                <form className="my-8" onSubmit={handleSubmit}>
-                    <div className="mb-2">
-                        <Input id="todo" placeholder="Add a todo" type="text" className="bg-black text-white" value={todo}
-                            onChange={(e) => setTodo(e.target.value)} required />
-                    </div>
-                    <div className="mb-2">
-                        <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </Select>
-                    </div>
-                    <button type="submit"
-                        className="bg-gradient-to-br relative group btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-                    >
-                        {isEditMode ? 'Update' : 'Add'}
-                    </button>
-                </form>
-
-                <div className="my-4">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8%'}}>
-                        <h3 className="font-bold text-lg text-center" >Current Todos:</h3>
-                        <h3>
-                            <Select name="sort" value={sortTodo} id="sort" className="bg-black text-white" onChange={handleSortChange}>
-                                <option value="id">Id</option>
-                                <option value="priority">Priority</option>
-                                {/* SELECT * FROM todo_details WHERE username = 'test' ORDER BY FIELD(priority, 'high', 'medium','low' ); */}
-                            </Select>
-                        </h3>
-                    </div>
-                    <ul style={{ listStyleType: 'none', padding: '0' }}>
-                        <li key="header-id" style={{ display: 'inline-block', width: '18%', fontWeight: 'bold' }}>ID</li>
-                        <li key="header-task" style={{ display: 'inline-block', width: '35%', fontWeight: 'bold' }}>Task</li>
-                        <li key="header-priority" style={{ display: 'inline-block', width: '22%', fontWeight: 'bold' }}>Priority</li>
-                        <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold' }}>Action</li>
-                    </ul>
-                    <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
-                        {todos.map((element) => (
-                            <TodoItem
-                                key={element.id}
-                                username={element.username}
-                                id={element.id}
-                                task={element.task}
-                                priority={element.priority}
-                                onEdit={handleEdit}
-                            />
-                        ))}
-                    </ul>
                 </div>
-            </div>
+            {/* <div style={{ display: "flex",justifyContent: "space-between",width: "100vw", position: "relative", float: "right" }}>
+                <h2 className="font-bold text-xl text-center">Todos</h2>
+            </div> */}
+
+
+                <div className="max-w-md w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
+
+                    <form className="my-8" onSubmit={handleSubmit}>
+                        <div className="mb-2">
+                            <Input id="todo" placeholder="Add a todo" type="text" className="bg-black text-white" value={todo}
+                                onChange={(e) => setTodo(e.target.value)} required />
+                        </div>
+                        <div className="mb-2">
+                            <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </Select>
+                        </div>
+                        <button type="submit"
+                            className="bg-gradient-to-br relative group btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+                        >
+                            {isEditMode ? 'Update' : 'Add'}
+                        </button>
+                    </form>
+
+                    <div className="my-4">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8%' }}>
+                            <h3 className="font-bold text-lg text-center" >Current Todos:</h3>
+                            <h3>
+                                <Select name="sort" value={sortTodo} id="sort" className="bg-black text-white" onChange={handleSortChange}>
+                                    <option value="id">Id</option>
+                                    <option value="priority">Priority</option>
+                                    {/* SELECT * FROM todo_details WHERE username = 'test' ORDER BY FIELD(priority, 'high', 'medium','low' ); */}
+                                </Select>
+                            </h3>
+                        </div>
+                        <ul style={{ listStyleType: 'none', padding: '0' }}>
+                            <li key="header-id" style={{ display: 'inline-block', width: '12%', fontWeight: 'bold' }}>ID</li>
+                        <li key="header-task" style={{ display: 'inline-block', width: '38%', fontWeight: 'bold', textAlign: "center" }}>Task</li>
+                        <li key="header-priority" style={{ display: 'inline-block', width: '24%', fontWeight: 'bold', textAlign: "center" }}>Priority</li>
+                            <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: "center" }}>Action</li>
+                        </ul>
+                        <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
+                            {todos.map((element) => (
+                                <TodoItem
+                                    key={element.id}
+                                    username={element.username}
+                                    id={element.id}
+                                    task={element.task}
+                                    priority={element.priority}
+                                    onEdit={handleEdit}
+                                />
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                
+
         </>
     );
 }
