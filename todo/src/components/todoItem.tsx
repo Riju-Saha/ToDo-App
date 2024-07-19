@@ -51,31 +51,32 @@ export default function TodoItem(props: {
             props.priority === "high" ? "#484848"
               : props.priority === "medium" ? "#919191"
                 : "#DADADA",
-          marginTop: "5%",
-          padding: "3%",
-          // display: "flex",
-          // justifyContent: "space-between"
+          marginTop: "2.5%",
+          padding: "1.5%",
+          display: "flex",
+          justifyContent: "space-between", 
+          alignItems: "center"
         }}
       >
-        <span style={{ display: "inline-block", width: "10%", color: "black", fontWeight: "bold" }}>
+        <span style={{ display: "inline-block", width: "10%", color: "black", fontWeight: "bold", alignItems: "center", justifyContent:"center"}}>
           {props.id}
         </span>
-        <span style={{ display: "inline-block", width: "20%", color: "black", fontWeight: "bold" }}>
+        <span style={{ display: "inline-block", width: "20%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
           {dateOnly}
         </span>
-        <div style={{ display: "inline-block", width: "30%", color: "black", fontWeight: "bold", wordWrap: "break-word" }}>
+        <div style={{ display: "inline-block", width: "30%", color: "black", fontWeight: "bold", wordWrap: "break-word", textAlign:"center", alignItems: "center", justifyContent:"center" }}>
           {props.task}
         </div>
-        <span style={{ display: "inline-block", width: "15%", color: "black", fontWeight: "bold", textAlign: "center" }}>
+        <span style={{ display: "inline-block", width: "15%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
           {props.priority}
         </span>
-        <span style={{ display: "inline-block", width: "4.5%", backgroundColor: 'gray', textAlign: 'center' }}>
+        <span style={{width: "4%", backgroundColor: 'gray', display: "flex", alignItems: "center", justifyContent:"center"}}>
           <button type="button" onClick={handleUpdate}>
             {/* Edit */}
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>
         </span>
-        <span style={{ display: "inline-block", width: "4.5%", backgroundColor: 'black', textAlign: 'center' }}>
+        <span style={{ width: "4%", backgroundColor: 'black', display: "flex", alignItems: "center", justifyContent:"center"}}>
           <button type="button" onClick={handleDelete}>
             {/* Delete */}
             <FontAwesomeIcon icon={faTrash} />

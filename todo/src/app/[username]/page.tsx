@@ -188,11 +188,11 @@ export default function Usernamepage() {
                                 </Select>
                             </h3>
                         </div>
-                        <ul style={{ listStyleType: 'none', padding: '0' }}>
-                        <li key="header-id" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: 'center' }}>ID</li>
+                        {/* <ul style={{ listStyleType: 'none', padding: '0', display:"flex", justifyContent:"space-between" }}>
+                        <li key="header-id" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold' }}>ID</li>
                         <li key="header-created" style={{ display: 'inline-block', width: '20%', fontWeight: 'bold', textAlign: 'center' }}>Created</li>
                         <li key="header-task" style={{ display: 'inline-block', width: '30%', fontWeight: 'bold', textAlign: 'center' }}>Task</li>
-                        <li key="header-priority" style={{ display: 'inline-block', width: '15%', fontWeight: 'bold', textAlign: 'center' }}>Priority</li>
+                        <li key="header-priority" style={{ display: 'inline-block', width: '13%', fontWeight: 'bold', textAlign: 'center' }}>Priority</li>
                         <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: 'center' }}>Action</li>
                         </ul>
                         <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
@@ -201,6 +201,47 @@ export default function Usernamepage() {
                                     key={element.id}
                                     username={element.username}
                                     startDate = {element.startDate}
+                                    id={element.id}
+                                    task={element.task}
+                                    priority={element.priority}
+                                    onEdit={handleEdit}
+                                />
+                            ))}
+                        </ul> */}
+
+                        <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
+                        <li
+                            style={{
+                                marginTop: "2.5%",
+                                padding: "1.5%",
+                                display: "flex",
+                                justifyContent: "space-between"
+                            }}
+                        >
+                            <span style={{ display: "inline-block", width: "10%", fontWeight: "bold" }}>
+                                ID
+                            </span>
+                            <span style={{ display: "inline-block", width: "20%", textAlign: "center", fontWeight: "bold" }}>
+                                Created
+                            </span>
+                            <span style={{ display: "inline-block", width: "30%", textAlign:"center", fontWeight: "bold" }}>
+                                Task
+                            </span>
+                            <span style={{ display: "inline-block", width: "18%", textAlign: "center", fontWeight: "bold" }}>
+                                Priority
+                            </span>
+                            <span style={{ display: "inline-block", width: "10%", textAlign: "center", fontWeight: "bold" }}>
+                                Action
+                            </span>
+                            </li>
+                        </ul>
+
+                        <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
+                            {todos.map((element) => (
+                                <TodoItem
+                                    key={element.id}
+                                    username={element.username}
+                                    startDate={element.startDate}
                                     id={element.id}
                                     task={element.task}
                                     priority={element.priority}
