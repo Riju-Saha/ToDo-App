@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
+
 export default function Loginpage() {
     const router = useRouter();
     const [username, setUsername] = useState('');
@@ -41,6 +42,7 @@ export default function Loginpage() {
         }
     };
 
+
     return (
         <div className="max-w-md w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black" >
             <h2 className="font-bold text-xl text-center">
@@ -53,13 +55,10 @@ export default function Loginpage() {
                     <Input id="Username" placeholder="Username" type="text" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={username}
                         onChange={(e) => setUsername(e.target.value)} />
                 </LabelInputContainer>
-
                 <LabelInputContainer className="mb-2">
-                <div className='w-full' style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Label htmlFor="Password" ></Label>
+                    <Label htmlFor="Password" >Password</Label>
                     <Input id="Password" placeholder="Password" type="password" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={password}
-                        onChange={(e) => setPassword(e.target.value)}  />
-                    </div>
+                        onChange={(e) => setPassword(e.target.value)} />
                 </LabelInputContainer>
 
                 <button
