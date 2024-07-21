@@ -1,10 +1,10 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import ResponsiveText from '@/components/ResponsiveText'
 
 
 export default function TodoItem(props: {
@@ -16,7 +16,16 @@ export default function TodoItem(props: {
   onEdit: (id: number, task: string, priority: string) => void;
 }) {
   const router = useRouter();
-  const dateOnly = new Date(props.startDate).toISOString().split('T')[0];
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const StartDateOnly = formatDate(props.startDate);
 
   const handleDelete = async () => {
     try {
@@ -58,28 +67,31 @@ export default function TodoItem(props: {
           alignItems: "center"
         }}
       >
-        <span style={{ display: "inline-block", width: "10%", color: "black", fontWeight: "bold", alignItems: "center", justifyContent:"center"}}>
-          {props.id}
+        <span style={{ display: "inline-block", width: "8%", color: "black", fontWeight: "bold", alignItems: "center", justifyContent:"center"}}>
+          <ResponsiveText>{props.id}</ResponsiveText>
         </span>
-        <span style={{ display: "inline-block", width: "20%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
-          {dateOnly}
+        <span style={{ display: "inline-block", width: "17%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
+          <ResponsiveText>{StartDateOnly}</ResponsiveText>
         </span>
-        <div style={{ display: "inline-block", width: "30%", color: "black", fontWeight: "bold", wordWrap: "break-word", textAlign:"center", alignItems: "center", justifyContent:"center" }}>
-          {props.task}
+        <span style={{ display: "inline-block", width: "17%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
+          <ResponsiveText>{StartDateOnly}</ResponsiveText>
+        </span>
+        <div style={{ display: "inline-block", width: "31%", color: "black", fontWeight: "bold", wordWrap: "break-word", textAlign:"center", alignItems: "center", justifyContent:"center" }}>
+          <ResponsiveText>{props.task}</ResponsiveText>
         </div>
-        <span style={{ display: "inline-block", width: "15%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
-          {props.priority}
+        <span style={{ display: "inline-block", width: "19%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
+          <ResponsiveText>{props.priority}</ResponsiveText>
         </span>
         <span style={{width: "4%", backgroundColor: 'gray', display: "flex", alignItems: "center", justifyContent:"center"}}>
           <button type="button" onClick={handleUpdate}>
             {/* Edit */}
-            <FontAwesomeIcon icon={faPenToSquare} />
+            <ResponsiveText><FontAwesomeIcon icon={faPenToSquare} /></ResponsiveText>
           </button>
         </span>
         <span style={{ width: "4%", backgroundColor: 'black', display: "flex", alignItems: "center", justifyContent:"center"}}>
           <button type="button" onClick={handleDelete}>
             {/* Delete */}
-            <FontAwesomeIcon icon={faTrash} />
+            <ResponsiveText><FontAwesomeIcon icon={faTrash} /></ResponsiveText>
 
           </button>
         </span>

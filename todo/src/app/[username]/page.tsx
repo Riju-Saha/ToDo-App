@@ -6,10 +6,13 @@ import LogoutBtn from '@/components/logoutBtn';
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import TodoItem from '@/components/todoItem';
+import ResponsiveText from '@/components/ResponsiveText'
+
 
 interface Todo {
     username: string;
     startDate: string;
+    endDate: string;
     id: number;
     task: string;
     priority: string;
@@ -18,6 +21,7 @@ interface Todo {
 export default function Usernamepage() {
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
+
     const [todo, setTodo] = useState('');
     const [priority, setPriority] = useState('low');
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -173,8 +177,8 @@ export default function Usernamepage() {
                     </form>
 
                     <div className="my-4">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8%' }}>
-                            <h3 className="font-bold text-lg text-center" >Current Todos:</h3>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <h3 className="font-bold text-lg text-center" ><ResponsiveText>Current Todos:</ResponsiveText></h3>
                             <h3>
                                 <Select name="sort" value={sortTodo} id="sort" className="bg-black text-white" onChange={handleSortChange}>
                                     <option value="id">Id</option>
@@ -192,20 +196,23 @@ export default function Usernamepage() {
                                 justifyContent: "space-between"
                             }}
                         >
-                            <span style={{ display: "inline-block", width: "10%", fontWeight: "bold" }}>
-                                ID
+                            <span style={{ display: "inline-block", width: "8%", fontWeight: "bold" }}>
+                                <ResponsiveText>ID</ResponsiveText>
+                            </span>
+                            <span style={{ display: "inline-block", width: "17%", textAlign: "center", fontWeight: "bold" }}>
+                                <ResponsiveText>Created</ResponsiveText>
+                            </span>
+                            <span style={{ display: "inline-block", width: "17%", textAlign: "center", fontWeight: "bold" }}>
+                                <ResponsiveText>Due</ResponsiveText>
+                            </span>
+                            <span style={{ display: "inline-block", width: "26%", textAlign:"center", fontWeight: "bold" }}>
+                                <ResponsiveText>Task</ResponsiveText>
                             </span>
                             <span style={{ display: "inline-block", width: "20%", textAlign: "center", fontWeight: "bold" }}>
-                                Created
-                            </span>
-                            <span style={{ display: "inline-block", width: "30%", textAlign:"center", fontWeight: "bold" }}>
-                                Task
-                            </span>
-                            <span style={{ display: "inline-block", width: "18%", textAlign: "center", fontWeight: "bold" }}>
-                                Priority
+                                <ResponsiveText>Priority</ResponsiveText>
                             </span>
                             <span style={{ display: "inline-block", width: "10%", textAlign: "center", fontWeight: "bold" }}>
-                                Action
+                                <ResponsiveText>Action</ResponsiveText>
                             </span>
                             </li>
                         </ul>
