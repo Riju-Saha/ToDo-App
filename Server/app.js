@@ -108,7 +108,6 @@ app.get('/todos', (req, res) => {
             console.error('Error fetching todos:', err);
             return res.status(500).json({ success: false, message: 'Failed to fetch todos' });
         }
-        // res.send(results)
         const todos = results.map(result => ({
             username: result.username,
             startDate: result.StartDate,
@@ -116,7 +115,6 @@ app.get('/todos', (req, res) => {
             task: result.todo,
             priority: result.priority
         }));
-        // console.log("todos are: ",todos)
         res.json({ success: true, todos });
     });
 });
