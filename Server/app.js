@@ -46,8 +46,8 @@ app.post('/auth/register', (req, res) => {
 
 app.post('/auth/login', (req, res) => {
     const { username, password } = req.body;
-    console.log("username is: ", username)
-    console.log("password is: ", password)
+    // console.log("username is: ", username)
+    // console.log("password is: ", password)
     const sql = "SELECT * FROM user WHERE username = ? AND password = ?";
     connection.query(sql, [username, password], (err, result) => {
         if (err) {
@@ -79,7 +79,7 @@ app.post('/todos', (req, res) => {
 
 app.get('/todos', (req, res) => {
     const { username, sortTodo } = req.query;
-    console.log({ username })
+    // console.log({ username })
     if (!username) {
         return res.status(400).json({ success: false, message: 'Username parameter is required' });
     }
@@ -122,7 +122,7 @@ app.get('/todos', (req, res) => {
 
 app.delete('/todos', (req, res) => {
     const { id } = req.query;
-    console.log({ id })
+    // console.log({ id })
     if (!id) {
         return res.status(400).json({ success: false, message: 'Id parameter is required' });
     }
