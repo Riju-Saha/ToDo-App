@@ -34,7 +34,8 @@ export default function TodoItem(props: {
   };
 
   const StartDateOnly = formatDate(props.startDate);
-  const EndDateOnly = formatDate1(props.endDate);
+  const EndDateOnly = formatDate(props.endDate);
+  const EndDate = formatDate1(props.endDate);
 
   const handleDelete = async () => {
     try {
@@ -58,7 +59,7 @@ export default function TodoItem(props: {
   };
 
   const handleUpdate = () => {
-    props.onEdit(props.id, props.task, props.priority, EndDateOnly)
+    props.onEdit(props.id, props.task, props.priority, EndDate)
   }
 
   return (

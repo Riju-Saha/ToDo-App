@@ -90,7 +90,7 @@ app.get('/todos', (req, res) => {
             SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
             FROM TODO_DETAILS
             WHERE username = ?
-            ORDER BY FIELD(priority, ?, ?, ?, ?)
+            ORDER BY FIELD(priority, 'high', 'medium', 'low')
         `;
     } else if (sortTodo === 'id') {
         sql = `

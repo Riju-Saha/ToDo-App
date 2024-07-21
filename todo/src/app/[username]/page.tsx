@@ -162,11 +162,9 @@ export default function Usernamepage() {
                 <div className="max-w-xxl w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
 
                     <form className="my-8" onSubmit={handleSubmit}>
-                        <div className="mb-2">
-                            <Input id="todo" placeholder="Add a todo" type="text" className="bg-black text-white" value={todo}
-                                onChange={(e) => setTodo(e.target.value)} required />
-                            <Input id="EndDate" type="date" value={EndDate}
-                                onChange={(e) => setEndDate(e.target.value)} required />
+                        <div className="mb-2" style={{display: "flex", justifyContent: "space-between"}}>
+                            <Input id="todo" type="text" placeholder="Add a todo"  className="bg-black text-white" value={todo} onChange={(e) => setTodo(e.target.value)} required />
+                            <Input id="EndDate" type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
                         </div>
                         <div className="mb-2">
                             <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
@@ -176,8 +174,7 @@ export default function Usernamepage() {
                             </Select>
                         </div>
                         <button type="submit"
-                            className="bg-gradient-to-br relative group btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-                        >
+                            className="bg-gradient-to-br relative group btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]">
                             {isEditMode ? 'Update' : 'Add'}
                         </button>
                     </form>
@@ -200,8 +197,7 @@ export default function Usernamepage() {
                                 padding: "1.5%",
                                 display: "flex",
                                 justifyContent: "space-between"
-                            }}
-                        >
+                            }}>
                             <span style={{ display: "inline-block", width: "8%", fontWeight: "bold" }}>
                                 <ResponsiveText>ID</ResponsiveText>
                             </span>
