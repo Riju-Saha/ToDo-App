@@ -7,7 +7,7 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     ({ className, children, ...props }, ref) => {
-        const radius = 120; // change this to increase the radius of the hover effect
+        const radius = 120;
         const [visible, setVisible] = React.useState(false);
 
         let mouseX = useMotionValue(0);

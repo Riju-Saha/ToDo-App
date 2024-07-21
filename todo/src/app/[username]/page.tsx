@@ -25,7 +25,6 @@ export default function Usernamepage() {
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
     const [sortTodo, setSortTodo] = useState<string>('id');
     console.log("todos are ", todos)
-    // alert(sortTodo)
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortTodo(e.target.value);
@@ -151,10 +150,6 @@ export default function Usernamepage() {
                     <LogoutBtn />
                 </Link>
                 </div>
-            {/* <div style={{ display: "flex",justifyContent: "space-between",width: "100vw", position: "relative", float: "right" }}>
-                <h2 className="font-bold text-xl text-center">Todos</h2>
-            </div> */}
-
 
                 <div className="max-w-xxl w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
 
@@ -184,30 +179,9 @@ export default function Usernamepage() {
                                 <Select name="sort" value={sortTodo} id="sort" className="bg-black text-white" onChange={handleSortChange}>
                                     <option value="id">Id</option>
                                     <option value="priority">Priority</option>
-                                    {/* SELECT * FROM todo_details WHERE username = 'test' ORDER BY FIELD(priority, 'high', 'medium','low' ); */}
                                 </Select>
                             </h3>
                         </div>
-                        {/* <ul style={{ listStyleType: 'none', padding: '0', display:"flex", justifyContent:"space-between" }}>
-                        <li key="header-id" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold' }}>ID</li>
-                        <li key="header-created" style={{ display: 'inline-block', width: '20%', fontWeight: 'bold', textAlign: 'center' }}>Created</li>
-                        <li key="header-task" style={{ display: 'inline-block', width: '30%', fontWeight: 'bold', textAlign: 'center' }}>Task</li>
-                        <li key="header-priority" style={{ display: 'inline-block', width: '13%', fontWeight: 'bold', textAlign: 'center' }}>Priority</li>
-                        <li key="header-action" style={{ display: 'inline-block', width: '10%', fontWeight: 'bold', textAlign: 'center' }}>Action</li>
-                        </ul>
-                        <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
-                            {todos.map((element) => (
-                                <TodoItem
-                                    key={element.id}
-                                    username={element.username}
-                                    startDate = {element.startDate}
-                                    id={element.id}
-                                    task={element.task}
-                                    priority={element.priority}
-                                    onEdit={handleEdit}
-                                />
-                            ))}
-                        </ul> */}
 
                         <ul className="pl-6" style={{ listStyleType: 'none', padding: 0 }}>
                         <li

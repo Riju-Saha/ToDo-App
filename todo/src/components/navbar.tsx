@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import {  Menu, MenuItem } from "@/components/ui/navbar-menu";
-// import { cn } from "@/utils/cn";
 import Link from 'next/link'
 
 export default function navbar() {
