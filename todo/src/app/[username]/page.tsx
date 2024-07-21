@@ -23,6 +23,7 @@ export default function Usernamepage() {
     const username = searchParams.get('username');
 
     const [todo, setTodo] = useState('');
+    const [EndDate, setEndDate] = useState('');
     const [priority, setPriority] = useState('low');
     const [todos, setTodos] = useState<Todo[]>([]);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -62,11 +63,12 @@ export default function Usernamepage() {
         }
     }, [username, fetchTodos]);
 
-    const handleEdit = (id: number, task: string, priority: string) => {
+    const handleEdit = (id: number, task: string, priority: string, endDate: string) => {
         setIsEditMode(true);
         setEditTodoId(id);
         setTodo(task);
         setPriority(priority);
+        setEndDate(endDate);
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -79,14 +81,14 @@ export default function Usernamepage() {
     };
 
     const handleAdd = async () => {
-        console.log('Form submitted:', { username, todo, priority });
+        console.log('Form submitted:', { username, todo, priority, EndDate });
         try {
             const response = await fetch(`http://localhost:8080/todos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, todo, priority }),
+                body: JSON.stringify({ username, todo, priority, EndDate }),
             });
 
             if (!response.ok) {
@@ -100,6 +102,7 @@ export default function Usernamepage() {
             if (data.success) {
                 fetchTodos();
                 setTodo('');
+                setEndDate('');
                 setPriority('low');
                 setIsEditMode(false);
                 setEditTodoId(null);
@@ -114,14 +117,14 @@ export default function Usernamepage() {
 
     const handleUpdate = async () => {
         if (editTodoId === null) return;
-
+        console.log("sending data: ", { username, todo, priority, EndDate });
         try {
             const response = await fetch(`http://localhost:8080/todos?id=${editTodoId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, todo, priority }),
+                body: JSON.stringify({ username, todo, priority, EndDate }),
             });
 
             if (!response.ok) {
@@ -135,6 +138,7 @@ export default function Usernamepage() {
             if (data.success) {
                 fetchTodos();
                 setTodo('');
+                setEndDate('');
                 setPriority('low');
                 setIsEditMode(false);
                 setEditTodoId(null);
@@ -161,6 +165,8 @@ export default function Usernamepage() {
                         <div className="mb-2">
                             <Input id="todo" placeholder="Add a todo" type="text" className="bg-black text-white" value={todo}
                                 onChange={(e) => setTodo(e.target.value)} required />
+                            <Input id="EndDate" type="date" value={EndDate}
+                                onChange={(e) => setEndDate(e.target.value)} required />
                         </div>
                         <div className="mb-2">
                             <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
@@ -205,10 +211,10 @@ export default function Usernamepage() {
                             <span style={{ display: "inline-block", width: "17%", textAlign: "center", fontWeight: "bold" }}>
                                 <ResponsiveText>Due</ResponsiveText>
                             </span>
-                            <span style={{ display: "inline-block", width: "26%", textAlign:"center", fontWeight: "bold" }}>
+                            <span style={{ display: "inline-block", width: "31%", textAlign:"center", fontWeight: "bold" }}>
                                 <ResponsiveText>Task</ResponsiveText>
                             </span>
-                            <span style={{ display: "inline-block", width: "20%", textAlign: "center", fontWeight: "bold" }}>
+                            <span style={{ display: "inline-block", width: "23%", textAlign: "center", fontWeight: "bold" }}>
                                 <ResponsiveText>Priority</ResponsiveText>
                             </span>
                             <span style={{ display: "inline-block", width: "10%", textAlign: "center", fontWeight: "bold" }}>
@@ -223,6 +229,7 @@ export default function Usernamepage() {
                                     key={element.id}
                                     username={element.username}
                                     startDate={element.startDate}
+                                    endDate={element.endDate}
                                     id={element.id}
                                     task={element.task}
                                     priority={element.priority}

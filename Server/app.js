@@ -63,9 +63,9 @@ app.post('/auth/login', (req, res) => {
     });
 });
 app.post('/todos', (req, res) => {
-    const { username, todo, priority } = req.body;
-    const sql = "INSERT INTO TODO_DETAILS (username, todo, priority) VALUES (?, ?, ?)"
-    connection.query(sql, [username, todo, priority], (err, result) => {
+    const { username, todo, priority, EndDate } = req.body;
+    const sql = "INSERT INTO TODO_DETAILS (username, todo, priority, EndDate) VALUES (?, ?, ?, ?)"
+    connection.query(sql, [username, todo, priority, EndDate], (err, result) => {
         if (err) {
             console.error('Database error:', err);
             res.status(500).json({ success: false, message: 'Database error' });
@@ -87,14 +87,14 @@ app.get('/todos', (req, res) => {
     let sql;
     if (sortTodo === 'priority') {
         sql = `
-            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate
+            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
             FROM TODO_DETAILS
             WHERE username = ?
-            ORDER BY FIELD(priority, ?, ?, ?)
+            ORDER BY FIELD(priority, ?, ?, ?, ?)
         `;
     } else if (sortTodo === 'id') {
         sql = `
-            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate
+            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
             FROM TODO_DETAILS
             WHERE username = ?
             ORDER BY todo_id
@@ -111,6 +111,7 @@ app.get('/todos', (req, res) => {
         const todos = results.map(result => ({
             username: result.username,
             startDate: result.StartDate,
+            endDate: result.EndDate,
             id: result.todo_id,
             task: result.todo,
             priority: result.priority
@@ -137,15 +138,15 @@ app.delete('/todos', (req, res) => {
 
 app.put('/todos', (req, res) => {
     const { id } = req.query;
-    const { username, todo, priority } = req.body;
-    console.log({ id });
+    const { username, todo, priority, EndDate } = req.body;
+    // console.log("getting data: ",{ username, todo, priority, EndDate });
 
     if (!id) {
         return res.status(400).json({ success: false, message: 'Id parameter is required' });
     }
 
-    const sql = 'UPDATE TODO_DETAILS SET todo=?, priority=? WHERE todo_id=? AND username=?';
-    connection.query(sql, [todo, priority, id, username], (err, results) => {
+    const sql = 'UPDATE TODO_DETAILS SET todo=?, priority=?, EndDate=? WHERE todo_id=? AND username=?';
+    connection.query(sql, [todo, priority, EndDate, id, username], (err, results) => {
         if (err) {
             console.error('Error updating todo:', err);
             return res.status(500).json({ success: false, message: 'Failed to update todo' });

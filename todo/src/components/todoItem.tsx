@@ -13,7 +13,8 @@ export default function TodoItem(props: {
   id: number;
   task: string;
   startDate: string;
-  onEdit: (id: number, task: string, priority: string) => void;
+  endDate: string;
+  onEdit: (id: number, task: string, priority: string, endDate: string) => void;
 }) {
   const router = useRouter();
 
@@ -24,8 +25,16 @@ export default function TodoItem(props: {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
+  const formatDate1 = (dateString: string): string => {
+    const date = new Date(dateString);
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
 
   const StartDateOnly = formatDate(props.startDate);
+  const EndDateOnly = formatDate1(props.endDate);
 
   const handleDelete = async () => {
     try {
@@ -49,7 +58,7 @@ export default function TodoItem(props: {
   };
 
   const handleUpdate = () => {
-    props.onEdit(props.id, props.task, props.priority)
+    props.onEdit(props.id, props.task, props.priority, EndDateOnly)
   }
 
   return (
@@ -74,12 +83,12 @@ export default function TodoItem(props: {
           <ResponsiveText>{StartDateOnly}</ResponsiveText>
         </span>
         <span style={{ display: "inline-block", width: "17%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
-          <ResponsiveText>{StartDateOnly}</ResponsiveText>
+          <ResponsiveText>{EndDateOnly}</ResponsiveText>
         </span>
         <div style={{ display: "inline-block", width: "31%", color: "black", fontWeight: "bold", wordWrap: "break-word", textAlign:"center", alignItems: "center", justifyContent:"center" }}>
           <ResponsiveText>{props.task}</ResponsiveText>
         </div>
-        <span style={{ display: "inline-block", width: "19%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
+        <span style={{ display: "inline-block", width: "25%", color: "black", fontWeight: "bold", textAlign: "center", alignItems: "center", justifyContent:"center" }}>
           <ResponsiveText>{props.priority}</ResponsiveText>
         </span>
         <span style={{width: "4%", backgroundColor: 'gray', display: "flex", alignItems: "center", justifyContent:"center"}}>
