@@ -8,7 +8,6 @@ import { Select } from "@/components/ui/select";
 import TodoItem from '@/components/todoItem';
 import ResponsiveText from '@/components/ResponsiveText'
 
-
 interface Todo {
     username: string;
     startDate: string;
@@ -30,7 +29,7 @@ export default function Usernamepage() {
     const [isEditMode, setIsEditMode] = useState(false);
     const [editTodoId, setEditTodoId] = useState<number | null>(null);
     const [sortTodo, setSortTodo] = useState<string>('id');
-    console.log("todos are ", todos)
+    console.log("todos are ", todos);
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortTodo(e.target.value);
