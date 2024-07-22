@@ -62,6 +62,7 @@ app.post('/auth/login', (req, res) => {
         }
     });
 });
+
 app.post('/todos', (req, res) => {
     const { username, todo, priority, EndDate } = req.body;
     const sql = "INSERT INTO TODO_DETAILS (username, todo, priority, EndDate) VALUES (?, ?, ?, ?)"
@@ -86,12 +87,11 @@ app.get('/todos', (req, res) => {
 
     let sql;
     if (sortTodo === 'priority') {
-        sql = `
-            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
-            FROM TODO_DETAILS
-            WHERE username = ?
-            ORDER BY FIELD(priority, 'high', 'medium', 'low')
-        `;
+        sql = ` SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
+                FROM TODO_DETAILS
+                WHERE username = ?
+                ORDER BY FIELD(priority, 'high', 'medium', 'low') `
+        ;
     } else if (sortTodo === 'id') {
         sql = `
             SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate

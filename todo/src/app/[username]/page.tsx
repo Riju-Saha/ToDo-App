@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import TodoItem from '@/components/todoItem';
 import ResponsiveText from '@/components/ResponsiveText'
+import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
 
 interface Todo {
@@ -19,6 +20,19 @@ interface Todo {
 }
 
 export default function Usernamepage() {
+
+    let mouseX = useMotionValue(0);
+    let mouseY = useMotionValue(0);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
+        let { left, top } = currentTarget.getBoundingClientRect();
+
+        mouseX.set(clientX - left);
+        mouseY.set(clientY - top);
+    }
+    const radius = 120;
+
+    const [visible, setVisible] = React.useState(false);
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
 
@@ -33,8 +47,9 @@ export default function Usernamepage() {
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortTodo(e.target.value);
-        console.log("sort is: ", sortTodo)
+        // console.log("sort is: ", sortTodo)
     };
+
     const fetchTodos = useCallback(async () => {
         try {
             const response = await fetch(`http://localhost:8080/todos?username=${username}&sortTodo=${sortTodo}`, {
@@ -163,8 +178,39 @@ export default function Usernamepage() {
 
                     <form className="my-8" onSubmit={handleSubmit}>
                         <div className="mb-2" style={{display: "flex", justifyContent: "space-between"}}>
-                            <Input id="todo" type="text" placeholder="Add a todo"  className="bg-black text-white" value={todo} onChange={(e) => setTodo(e.target.value)} required />
-                            <Input id="EndDate" type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
+                        <motion.div
+                            style={{
+                                background: useMotionTemplate`
+                                    radial-gradient(${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,         
+                                    var(--blue-500),
+                                    transparent 80%
+                                ) `,
+                                width: "70%"
+                            }}
+                            onMouseMove={handleMouseMove}
+                            onMouseEnter={() => setVisible(true)}
+                            onMouseLeave={() => setVisible(false)}
+                            className="p-[2px] rounded-lg transition duration-300 group/input"
+                        >
+                            <Input  id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
+                        </motion.div>
+                        <motion.div
+                            style={{
+                                background: useMotionTemplate`
+                    radial-gradient(${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,         
+                    var(--blue-500),
+                    transparent 80%
+                    ) `,
+                     width: "25%"
+                            }}
+                            onMouseMove={handleMouseMove}
+                            onMouseEnter={() => setVisible(true)}
+                            onMouseLeave={() => setVisible(false)}
+                            className="p-[2px] rounded-lg transition duration-300 group/input"
+                        >
+                            <Input className='w-full' id="EndDate" type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
+                        </motion.div>
+
                         </div>
                         <div className="mb-2">
                             <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
