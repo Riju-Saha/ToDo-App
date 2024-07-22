@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import TodoItem from '@/components/todoItem';
 import ResponsiveText from '@/components/ResponsiveText'
-import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
 
 interface Todo {
@@ -21,18 +20,6 @@ interface Todo {
 
 export default function Usernamepage() {
 
-    let mouseX = useMotionValue(0);
-    let mouseY = useMotionValue(0);
-
-    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
-        let { left, top } = currentTarget.getBoundingClientRect();
-
-        mouseX.set(clientX - left);
-        mouseY.set(clientY - top);
-    }
-    const radius = 120;
-
-    const [visible, setVisible] = React.useState(false);
     const searchParams = useSearchParams();
     const username = searchParams.get('username');
 
@@ -177,41 +164,13 @@ export default function Usernamepage() {
                 <div className="max-w-xxl w-full mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-black dark:bg-black">
 
                     <form className="my-8" onSubmit={handleSubmit}>
-                        <div className="mb-2" style={{display: "flex", justifyContent: "space-between"}}>
-                        <motion.div
-                            style={{
-                                background: useMotionTemplate`
-                                    radial-gradient(${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,         
-                                    var(--blue-500),
-                                    transparent 80%
-                                ) `,
-                                width: "70%"
-                            }}
-                            onMouseMove={handleMouseMove}
-                            onMouseEnter={() => setVisible(true)}
-                            onMouseLeave={() => setVisible(false)}
-                            className="p-[2px] rounded-lg transition duration-300 group/input"
-                        >
-                            <Input  id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
-                        </motion.div>
-                        <motion.div
-                            style={{
-                                background: useMotionTemplate`
-                    radial-gradient(${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,         
-                    var(--blue-500),
-                    transparent 80%
-                    ) `,
-                     width: "25%"
-                            }}
-                            onMouseMove={handleMouseMove}
-                            onMouseEnter={() => setVisible(true)}
-                            onMouseLeave={() => setVisible(false)}
-                            className="p-[2px] rounded-lg transition duration-300 group/input"
-                        >
-                            <Input className='w-full' id="EndDate" type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
-                        </motion.div>
 
+                        <div className="mb-2" style={{display: "flex", justifyContent: "space-between"}}>
+                                <Input width="70%" id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
+
+                                <Input width="25%" className='w-full' id="EndDate" type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
                         </div>
+
                         <div className="mb-2">
                             <Select id="priority" className="bg-black text-white" value={priority} onChange={(e) => setPriority(e.target.value)}>
                                 <option value="low">Low</option>
@@ -219,10 +178,12 @@ export default function Usernamepage() {
                                 <option value="high">High</option>
                             </Select>
                         </div>
+
                         <button type="submit"
                             className="bg-gradient-to-br relative group btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]">
                             {isEditMode ? 'Update' : 'Add'}
                         </button>
+
                     </form>
 
                     <div className="my-4">
