@@ -23,7 +23,7 @@ connection.connect((err) => {
 });
 
 app.get('/', (req,res) => {
-    res.json('Hello World');
+    res.send('Hello World');
 })
 
 app.post('/auth/register', (req, res) => {
