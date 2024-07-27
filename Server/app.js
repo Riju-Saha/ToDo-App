@@ -43,6 +43,7 @@ pool.connect((err, client, release) => {
 
 app.get('/', (req,res) => {
     res.json("hello world");
+    console.log("working")
 })
 
 app.post('/auth/register', async (req, res) => {
