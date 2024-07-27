@@ -52,11 +52,11 @@ export default function Registerpage() {
             <form className="my-8" onSubmit={handleSubmit}>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Name" >Name</Label>
-                    <Input id="Name" placeholder="Name" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17px' }} value={name} onChange={(e) => setName(e.target.value)} />
+                    <Input id="Name" placeholder="Name" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17px' }} value={name} onChange={(e) => setName(e.target.value)} required />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Username" >Username</Label>
-                    <Input id="Username" placeholder="Username" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <Input id="Username" placeholder="Username" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={username} onChange={(e) => setUsername(e.target.value)} required />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Password" >Password</Label>

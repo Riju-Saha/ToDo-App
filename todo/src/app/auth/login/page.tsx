@@ -54,12 +54,12 @@ export default function Loginpage() {
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Username" >Username</Label>
                      <Input id="Username" placeholder="Username" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={username}
-                        onChange={(e) => setUsername(e.target.value)} />
+                        onChange={(e) => setUsername(e.target.value)} required/>
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Password" >Password</Label>
                     <Input id="Password" placeholder="Password" type="password" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={password}
-                        onChange={(e) => setPassword(e.target.value)} />
+                        onChange={(e) => setPassword(e.target.value)} required/>
                 </LabelInputContainer>
 
                 <button
