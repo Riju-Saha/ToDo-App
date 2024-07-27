@@ -17,6 +17,7 @@ app.use(express.json());
 const { Pool } = require('pg');
 
 const pool = new Pool({
+    // connectionString: "postgres://default:24KuaJMyTiOs@ep-noisy-wildflower-a4aaj6k8-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
     connectionString: "postgres://default:24KuaJMyTiOs@ep-noisy-wildflower-a4aaj6k8-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
 });
 
