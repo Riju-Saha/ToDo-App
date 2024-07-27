@@ -42,7 +42,7 @@ pool.connect((err, client, release) => {
 // });
 
 app.get('/', (req,res) => {
-    res.json("hello world");
+    res.json({message: "working"});
     console.log("working")
 })
 
