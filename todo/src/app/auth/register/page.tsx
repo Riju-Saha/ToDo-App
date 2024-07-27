@@ -16,13 +16,12 @@ export default function Registerpage() {
         console.log('Form submitted:', { name, username, password });
 
         try {
-            const response = await fetch('https://todo-app-server-henna.vercel.app/auth/register', {
+            const response = await fetch('http://localhost:8080/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ name, username, password }),
-                credentials: 'include',
             });
 
             if (!response.ok) {

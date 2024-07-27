@@ -40,9 +40,8 @@ export default function Usernamepage() {
 
     const fetchTodos = useCallback(async () => {
         try {
-            const response = await fetch(`https://todo-app-server-henna.vercel.app/todos?username=${username}&sortTodo=${sortTodo}`, {
+            const response = await fetch(`http://localhost:8080/todos?username=${username}&sortTodo=${sortTodo}`, {
                 method: 'GET',
-                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -87,13 +86,12 @@ export default function Usernamepage() {
     const handleAdd = async () => {
         console.log('Form submitted:', { username, todo, priority, EndDate });
         try {
-            const response = await fetch(`https://todo-app-server-henna.vercel.app/todos`, {
+            const response = await fetch(`http://localhost:8080/todos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, todo, priority, EndDate }),
-                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -124,13 +122,12 @@ export default function Usernamepage() {
         if (editTodoId === null) return;
         console.log("sending data: ", { username, todo, priority, EndDate });
         try {
-            const response = await fetch(`https://todo-app-server-henna.vercel.app/todos?id=${editTodoId}`, {
+            const response = await fetch(`http://localhost:8080/todos?id=${editTodoId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, todo, priority, EndDate }),
-                credentials: 'include',
             });
 
             if (!response.ok) {
