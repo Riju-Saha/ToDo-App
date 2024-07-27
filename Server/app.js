@@ -6,7 +6,11 @@ const app = express();
 const port = 8080;
 
 // middlewares
-app.use(cors())
+app.use(cors({
+    origin: ["https://to-do-app-nine-ochre.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}))
 app.use(bodyParser.json());
 app.use(express.json());
 
