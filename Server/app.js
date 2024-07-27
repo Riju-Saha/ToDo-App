@@ -93,16 +93,27 @@ app.get('/todos', (req, res) => {
                 ORDER BY FIELD(priority, 'high', 'medium', 'low') `
         ;
     } else if (sortTodo === 'id') {
-        sql = `
-            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
-            FROM TODO_DETAILS
-            WHERE username = ?
-            ORDER BY todo_id
-        `;
+        sql = ` SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
+                FROM TODO_DETAILS
+                WHERE username = ?
+                ORDER BY todo_id`
+        ;
+    } else if (sortTodo === 'urgent') {
+        sql = ` SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
+                FROM TODO_DETAILS
+                WHERE username = ?
+                ORDER BY EndDate ASC`
+        ;
+    } else if (sortTodo === 'distant') {
+        sql = ` SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
+                FROM TODO_DETAILS
+                WHERE username = ?
+                ORDER BY EndDate DESC`
+        ;
     } else {
         return res.status(400).json({ success: false, message: 'Invalid sort option' });
     }
-
+    
     connection.query(sql, [username, 'high', 'medium', 'low'], (err, results) => {
         if (err) {
             console.error('Error fetching todos:', err);
