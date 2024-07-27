@@ -16,12 +16,13 @@ export default function Loginpage() {
         console.log('Form submitted:', { username, password });
 
         try {
-            const response = await fetch('http://localhost:8080/auth/login', {
+            const response = await fetch('https://todo-app-server-henna.vercel.app/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
+                credentials: 'include',
             }
             );
 

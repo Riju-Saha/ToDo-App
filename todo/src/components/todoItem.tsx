@@ -40,8 +40,9 @@ export default function TodoItem(props: {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/todos?id=${props.id}`, {
+        `https://todo-app-server-henna.vercel.app/todos?id=${props.id}`, {
         method: "DELETE",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
