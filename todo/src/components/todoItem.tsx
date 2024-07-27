@@ -40,9 +40,8 @@ export default function TodoItem(props: {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `https://todo-app-server-henna.vercel.app/todos?id=${props.id}`, {
+        `http://localhost:8080/todos?id=${props.id}`, {
         method: "DELETE",
-        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
@@ -67,15 +66,18 @@ export default function TodoItem(props: {
     <div>
       <li
         style={{
-          backgroundColor:
-            props.priority === "high" ? "#484848"
-              : props.priority === "medium" ? "#919191"
-                : "#DADADA",
+          borderLeft:
+            props.priority === "high" ? "#f23037"
+              : props.priority === "medium" ? "#918d0a"
+                : "#5ad3db",
+          borderLeftStyle: "solid", 
+          borderLeftWidth: "18px",
           marginTop: "2.5%",
           padding: "1.5%",
           display: "flex",
           justifyContent: "space-between", 
-          alignItems: "center"
+          alignItems: "center", 
+          backgroundColor: "white"
         }}
       >
         <span style={{ display: "inline-block", width: "8%", color: "black", fontWeight: "bold", alignItems: "center", justifyContent:"center"}}>

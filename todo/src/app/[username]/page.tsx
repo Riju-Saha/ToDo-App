@@ -162,7 +162,7 @@ export default function Usernamepage() {
 
     return (
         <>
-            <div style={{ display: "flex", justifyContent: "space-between", position: "relative", float: "right", marginTop: "1%", marginRight: "1%" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", position: "relative", float: "right", marginTop: "0.6%", marginRight: "2.5%" }}>
                 <Link href='/auth/login'>
                     <LogoutBtn />
                 </Link>
@@ -173,9 +173,9 @@ export default function Usernamepage() {
                     <form className="my-8" onSubmit={handleSubmit}>
 
                         <div className="mb-2" style={{display: "flex", justifyContent: "space-between"}}>
-                            <Input width="69vw" id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
+                            <Input width="100vw" id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
 
-                            <Input width="31vw"   className='w-full' id="EndDate" min={minDate} type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
+                            <Input width="auto"   className='w-full' id="EndDate" min={minDate} type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
                         </div>
 
                         <div className="mb-2">
@@ -199,6 +199,8 @@ export default function Usernamepage() {
                             <h3>
                                 <Select name="sort" value={sortTodo} id="sort" className="bg-black text-white" onChange={handleSortChange}>
                                     <option value="id">Id</option>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="distant">Distant</option>
                                     <option value="priority">Priority</option>
                                 </Select>
                             </h3>
@@ -212,7 +214,7 @@ export default function Usernamepage() {
                                 display: "flex",
                                 justifyContent: "space-between"
                             }}>
-                            <span style={{ display: "inline-block", width: "8%", fontWeight: "bold" }}>
+                            <span style={{ display: "inline-block", width: "8%", marginLeft: "2%", fontWeight: "bold" }}>
                                 <ResponsiveText>ID</ResponsiveText>
                             </span>
                             <span style={{ display: "inline-block", width: "17%", textAlign: "center", fontWeight: "bold" }}>
