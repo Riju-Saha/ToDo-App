@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 
+
 export default function Loginpage() {
     const router = useRouter();
     const [username, setUsername] = useState('');
@@ -52,12 +53,12 @@ export default function Loginpage() {
             <form className="my-8" onSubmit={handleSubmit}>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Username" >Username</Label>
-                    <Input id="Username" placeholder="Username" type="text" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={username}
+                     <Input id="Username" placeholder="Username" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={username}
                         onChange={(e) => setUsername(e.target.value)} />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Password" >Password</Label>
-                    <Input id="Password" placeholder="Password" type="password" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={password}
+                    <Input id="Password" placeholder="Password" type="password" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={password}
                         onChange={(e) => setPassword(e.target.value)} />
                 </LabelInputContainer>
 

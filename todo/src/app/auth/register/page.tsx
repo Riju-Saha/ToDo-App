@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
 
+
 export default function Registerpage() {
     const router = useRouter();
     const [name, setName] = useState('');
@@ -51,15 +52,15 @@ export default function Registerpage() {
             <form className="my-8" onSubmit={handleSubmit}>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Name" >Name</Label>
-                    <Input id="Name" placeholder="Name" type="text" className="bg-black" style={{ color: 'white', fontSize: '17px' }} value={name} onChange={(e) => setName(e.target.value)} />
+                    <Input id="Name" placeholder="Name" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17px' }} value={name} onChange={(e) => setName(e.target.value)} />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Username" >Username</Label>
-                    <Input id="Username" placeholder="Username" type="text" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <Input id="Username" placeholder="Username" type="text" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={username} onChange={(e) => setUsername(e.target.value)} />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-2">
                     <Label htmlFor="Password" >Password</Label>
-                    <Input id="Password" placeholder="Password" type="password" className="bg-black" style={{ color: 'white', fontSize: '17 px' }} value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <Input id="Password" placeholder="Password" type="password" className="bg-black w-full" style={{ color: 'white', fontSize: '17 px' }} value={password} onChange={(e) => setPassword(e.target.value)} />
                 </LabelInputContainer>
 
                 <button

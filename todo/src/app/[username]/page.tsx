@@ -173,9 +173,9 @@ export default function Usernamepage() {
                     <form className="my-8" onSubmit={handleSubmit}>
 
                         <div className="mb-2" style={{display: "flex", justifyContent: "space-between"}}>
-                            <Input width="70%" id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
+                            <Input width="69vw" id="todo" type="text" placeholder="Add a todo" className="bg-black text-white w-full" value={todo} onChange={(e) => setTodo(e.target.value)} required />
 
-                            <Input width="25%" className='w-full' id="EndDate" min={minDate} type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
+                            <Input width="31vw"   className='w-full' id="EndDate" min={minDate} type="date" value={EndDate} onChange={(e) => setEndDate(e.target.value)} required />
                         </div>
 
                         <div className="mb-2">
