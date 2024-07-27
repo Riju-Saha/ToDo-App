@@ -42,7 +42,7 @@ pool.connect((err, client, release) => {
 // });
 
 app.get('/', (req,res) => {
-    res.send('Hello World');
+    res.json("hello world");
 })
 
 app.post('/auth/register', async (req, res) => {
