@@ -14,154 +14,203 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.json());
 
+const { Pool } = require('pg');
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'todolist_db'
+const pool = new Pool({
+    connectionString: "postgres://default:24KuaJMyTiOs@ep-noisy-wildflower-a4aaj6k8-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
 });
 
-connection.connect((err) => {
-    if (err) throw err;
+pool.connect((err, client, release) => {
+    if (err) {
+        console.error('Error acquiring client', err.stack);
+        return;
+    }
     console.log('Connected!');
+    release();
 });
+
+// var connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     database: 'todolist_db'
+// });
+
+// connection.connect((err) => {
+//     if (err) throw err;
+//     console.log('Connected!');
+// });
 
 app.get('/', (req,res) => {
     res.send('Hello World');
 })
 
-app.post('/auth/register', (req, res) => {
+app.post('/auth/register', async (req, res) => {
     const { name, username, password } = req.body;
     console.log("Received registration request:", { name, username, password });
 
-    const sql = "INSERT INTO USER (name, username, password) VALUES (?, ?, ?)";
-    connection.query(sql, [name, username, password], (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            res.status(500).json({ success: false, message: 'Database error' });
-            return;
-        }
+    const sql = "INSERT INTO \"user\" (name, username, password) VALUES ($1, $2, $3)";
+
+    try {
+        const client = await pool.connect();
+        const result = await client.query(sql, [name, username, password]);
+        client.release();
 
         console.log('User registered successfully:', result);
         res.status(200).json({ success: true, message: 'User registered successfully' });
-    });
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ success: false, message: 'Database error' });
+    }
 });
 
 
-app.post('/auth/login', (req, res) => {
+app.post('/auth/login', async (req, res) => {
     const { username, password } = req.body;
-    // console.log("username is: ", username)
-    // console.log("password is: ", password)
-    const sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-    connection.query(sql, [username, password], (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            res.status(500).json({ success: false, message: 'Database error' });
-            return;
-        }
-        if (result.length > 0) {
+    // console.log("username is:", username);
+    // console.log("password is:", password);
+
+    const sql = "SELECT * FROM \"user\" WHERE username = $1 AND password = $2";
+
+    try {
+        const client = await pool.connect();
+        const result = await client.query(sql, [username, password]);
+        client.release();
+
+        if (result.rows.length > 0) {
             res.status(200).json({ success: true });
         } else {
             res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
-    });
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ success: false, message: 'Database error' });
+    }
 });
 
-app.post('/todos', (req, res) => {
+app.post('/todos', async (req, res) => {
     const { username, todo, priority, EndDate } = req.body;
-    const sql = "INSERT INTO TODO_DETAILS (username, todo, priority, EndDate) VALUES (?, ?, ?, ?)"
-    connection.query(sql, [username, todo, priority, EndDate], (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            res.status(500).json({ success: false, message: 'Database error' });
-            return;
-        }
+    const sql = "INSERT INTO todo_details (username, todo, priority, enddate) VALUES ($1, $2, $3, $4)";
 
-        console.log('todo registered successfully:', result);
-        res.status(200).json({ success: true, message: 'todo registered successfully' });
-    });
+    try {
+        const client = await pool.connect();
+        const result = await client.query(sql, [username, todo, priority, EndDate]);
+        client.release();
+
+        console.log('Todo registered successfully:', result);
+        res.status(200).json({ success: true, message: 'Todo registered successfully' });
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ success: false, message: 'Database error' });
+    }
 });
 
-app.get('/todos', (req, res) => {
+app.get('/todos', async (req, res) => {
     const { username, sortTodo } = req.query;
-    // console.log({ username })
+
     if (!username) {
         return res.status(400).json({ success: false, message: 'Username parameter is required' });
     }
 
     let sql;
+    let params = [username];
+
     if (sortTodo === 'priority') {
-        sql = ` SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
-                FROM TODO_DETAILS
-                WHERE username = ?
-                ORDER BY FIELD(priority, 'high', 'medium', 'low') `
-        ;
+        sql = `
+            SELECT todo_id, username, todo, priority, StartDate, EndDate
+            FROM todo_details
+            WHERE username = $1
+            ORDER BY CASE priority
+                WHEN 'high' THEN 1
+                WHEN 'medium' THEN 2
+                WHEN 'low' THEN 3
+                ELSE 4
+            END
+        `;
     } else if (sortTodo === 'id') {
         sql = `
-            SELECT todo_id, username, todo, priority, DATE(StartDate) AS StartDate, DATE(EndDate) AS EndDate
-            FROM TODO_DETAILS
-            WHERE username = ?
+            SELECT todo_id, username, todo, priority, StartDate, EndDate
+            FROM todo_details
+            WHERE username = $1
             ORDER BY todo_id
         `;
     } else {
         return res.status(400).json({ success: false, message: 'Invalid sort option' });
     }
 
-    connection.query(sql, [username, 'high', 'medium', 'low'], (err, results) => {
-        if (err) {
-            console.error('Error fetching todos:', err);
-            return res.status(500).json({ success: false, message: 'Failed to fetch todos' });
-        }
-        const todos = results.map(result => ({
-            username: result.username,
-            startDate: result.StartDate,
-            endDate: result.EndDate,
-            id: result.todo_id,
-            task: result.todo,
-            priority: result.priority
+    try {
+        const client = await pool.connect();
+        const result = await client.query(sql, params);
+        client.release();
+
+        const todos = result.rows.map(row => ({
+            username: row.username,
+            startDate: row.startdate,
+            endDate: row.enddate,
+            id: row.todo_id,
+            task: row.todo,
+            priority: row.priority
         }));
+
         res.json({ success: true, todos });
-    });
+    } catch (err) {
+        console.error('Error fetching todos:', err);
+        res.status(500).json({ success: false, message: 'Failed to fetch todos' });
+    }
 });
 
-app.delete('/todos', (req, res) => {
+app.delete('/todos', async (req, res) => {
     const { id } = req.query;
-    // console.log({ id })
+
     if (!id) {
         return res.status(400).json({ success: false, message: 'Id parameter is required' });
     }
-    const sql = 'DELETE FROM TODO_DETAILS WHERE todo_id = ?';
-    connection.query(sql, [id], (err, results) => {
-        if (err) {
-            console.error('Error fetching todos:', err);
-            return res.status(500).json({ success: false, message: 'Failed to fetch todos' });
+
+    const sql = 'DELETE FROM todo_details WHERE todo_id = $1';
+
+    try {
+        const client = await pool.connect();
+        const result = await client.query(sql, [id]);
+        client.release();
+
+        if (result.rowCount > 0) {
+            res.status(200).json({ success: true, message: `Todo with id ${id} deleted successfully` });
+        } else {
+            res.status(404).json({ success: false, message: `Todo with id ${id} not found` });
         }
-        res.status(200).json({ success: true, message: `Todo with id ${id} deleted successfully` });
-    });
+    } catch (err) {
+        console.error('Error deleting todo:', err);
+        res.status(500).json({ success: false, message: 'Failed to delete todo' });
+    }
 });
 
-app.put('/todos', (req, res) => {
+app.put('/todos', async (req, res) => {
     const { id } = req.query;
     const { username, todo, priority, EndDate } = req.body;
-    // console.log("getting data: ",{ username, todo, priority, EndDate });
 
     if (!id) {
         return res.status(400).json({ success: false, message: 'Id parameter is required' });
     }
 
-    const sql = 'UPDATE TODO_DETAILS SET todo=?, priority=?, EndDate=? WHERE todo_id=? AND username=?';
-    connection.query(sql, [todo, priority, EndDate, id, username], (err, results) => {
-        if (err) {
-            console.error('Error updating todo:', err);
-            return res.status(500).json({ success: false, message: 'Failed to update todo' });
-        }
+    const sql = `
+        UPDATE todo_details
+        SET todo = $1, priority = $2, EndDate = $3
+        WHERE todo_id = $4 AND username = $5
+    `;
 
-        if (results.affectedRows === 0) {
+    try {
+        const client = await pool.connect();
+        const result = await client.query(sql, [todo, priority, EndDate, id, username]);
+        client.release();
+
+        if (result.rowCount === 0) {
             return res.status(404).json({ success: false, message: 'Todo not found' });
         }
 
         res.json({ success: true, message: `Todo with id ${id} updated successfully` });
-    });
+    } catch (err) {
+        console.error('Error updating todo:', err);
+        res.status(500).json({ success: false, message: 'Failed to update todo' });
+    }
 });
 
 app.listen(port);
